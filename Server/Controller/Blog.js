@@ -71,14 +71,14 @@ const DownVoteBlog = async (req, res) => {
   }
 };
 
-//function to search blog by title
+//function to search blog by title,content, author
 const SearchBlog = async (req, res) => {
   try {
     const result = await Blog.find({
       $or: [
-        { title: { $regex: req.body.txte } },
-        { content: { $regex: req.body.txte } },
-        { author: { $regex: req.body.txte } },
+        { title: { $regex: req.body.text } },
+        { content: { $regex: req.body.text } },
+        { author: { $regex: req.body.text } },
       ],
     });
     res.send(result.reverse());

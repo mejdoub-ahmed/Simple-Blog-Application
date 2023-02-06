@@ -21,30 +21,26 @@ export default function AddBlogs() {
 
   // function to add a new blog
   const AddNewBlog = () => {
-    if (!title || !author || !content || url) {
-      alert("please fill all inforamtion");
-    } else {
-      axios
-        .post(`http://localhost:5000/Blog/AddNewBlog`, {
-          title: title,
-          content: content,
-          author: author,
-          photo: url,
-          upvote: 0,
-          downvote: 0,
-        })
-        .then(() => {
-          setSubmit(true);
-        })
-        .then(() => {
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+    axios
+      .post(`http://localhost:5000/Blog/AddNewBlog`, {
+        title: title,
+        content: content,
+        author: author,
+        photo: url,
+        upvote: 0,
+        downvote: 0,
+      })
+      .then(() => {
+        setSubmit(true);
+      })
+      .then(() => {
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   // function to upload picture using cloudinary

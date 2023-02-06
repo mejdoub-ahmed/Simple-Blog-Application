@@ -17,7 +17,7 @@ export default function Search() {
   const SearchBlog = () => {
     axios
       .post(`http://localhost:5000/Blog/SearchBlog`, {
-        txte: searchedWord,
+        text: searchedWord,
       })
       .then((result) => {
         SetSearchedBlogData(result.data);
