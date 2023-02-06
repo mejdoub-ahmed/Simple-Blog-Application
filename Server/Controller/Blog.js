@@ -4,7 +4,7 @@ const Blog = require("../Database/Model/Blog.js");
 const GetAllBlogs = async (req, res) => {
   try {
     const result = await Blog.find({});
-    res.status(200).send(result);
+    res.status(200).send(result.reverse());
   } catch (err) {
     res.status(500).send(err);
   }
@@ -31,6 +31,7 @@ const AddNewBlog = async (req, res) => {
     title: req.body.title,
     content: req.body.content,
     author: req.body.author,
+    photo: req.body.photo,
     upvote: req.body.upvote,
     downvote: req.body.downvote,
   });
@@ -73,8 +74,14 @@ const DownVoteBlog = async (req, res) => {
 //function to search blog by title
 const SearchBlog = async (req, res) => {
   try {
-    const result = await Blog.find({ title: { $regex: req.body.title } });
-    res.send(result);
+    const result = await Blog.find({
+      $or: [
+        { title: { $regex: req.body.txte } },
+        { content: { $regex: req.body.txte } },
+        { author: { $regex: req.body.txte } },
+      ],
+    });
+    res.send(result.reverse());
   } catch (error) {
     res.status(500).send(error);
   }

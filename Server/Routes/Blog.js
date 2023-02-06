@@ -17,6 +17,6 @@ router.post("/AddNewBlog", AddNewBlog);
 router.put("/UpVoteBlog/:id", UpVoteBlog);
 router.put("/DownVoteBlog/:id", DownVoteBlog);
 
-router.get("/SearchBlog", SearchBlog);
+router.post("/SearchBlog", SearchBlog);
 
 module.exports = router;
