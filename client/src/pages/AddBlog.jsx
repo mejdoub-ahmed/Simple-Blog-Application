@@ -7,10 +7,15 @@ import axios from "axios";
 export default function AddBlogs() {
   const navigate = useNavigate();
 
-  // states to save each input
+  // states to save title input
   let [title, setTitle] = useState("");
+  let [errorTitle, setErrorTitle] = useState("");
+  // states to save author input
   let [author, setAuthor] = useState("");
+  let [errorAuthor, setErrorAuthor] = useState("");
+  // states to save content input
   let [content, setContent] = useState("");
+  let [errorContent, setErrorContent] = useState("");
 
   // state the save the url of the picture
   let [url, setUrl] = useState("");
@@ -21,26 +26,31 @@ export default function AddBlogs() {
 
   // function to add a new blog
   const AddNewBlog = () => {
-    axios
-      .post(`http://localhost:5000/Blog/AddNewBlog`, {
-        title: title,
-        content: content,
-        author: author,
-        photo: url,
-        upvote: 0,
-        downvote: 0,
-      })
-      .then(() => {
-        setSubmit(true);
-      })
-      .then(() => {
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (title.trim() === "") setErrorTitle("Title cannot be empty");
+    if (author.trim() === "") setErrorAuthor("Author cannot be empty");
+    if (content.trim() === "") setErrorContent("Content cannot be empty");
+    else {
+      axios
+        .post(`http://localhost:5000/Blog/AddNewBlog`, {
+          title: title,
+          content: content,
+          author: author,
+          photo: url,
+          upvote: 0,
+          downvote: 0,
+        })
+        .then(() => {
+          setSubmit(true);
+        })
+        .then(() => {
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   // function to upload picture using cloudinary
@@ -111,29 +121,42 @@ export default function AddBlogs() {
 
                 <div className="form-floating mb-3">
                   <input
-                    className="form-control"
+                    className={`form-control ${errorTitle ? "is-invalid" : ""}`}
                     type="text"
                     placeholder="Title"
                     id="validationServer05"
                     onChange={(event) => {
                       setTitle(event.target.value);
+                      if (errorTitle) setErrorTitle("");
                     }}
                   />
                   <label>Title</label>
+                  {errorTitle && (
+                    <div className="invalid-feedback">{errorTitle}</div>
+                  )}
                 </div>
 
                 {/* Author input*/}
+
                 <div className="form-floating mb-3">
                   <input
-                    className="form-control"
+                    className={`form-control ${
+                      errorAuthor ? "is-invalid" : ""
+                    }`}
                     type="text"
                     placeholder="author"
+                    id="validationServer05"
                     onChange={(event) => {
                       setAuthor(event.target.value);
+                      if (errorAuthor) setErrorAuthor("");
                     }}
                   />
                   <label>Author</label>
+                  {errorAuthor && (
+                    <div className="invalid-feedback">{errorAuthor}</div>
+                  )}
                 </div>
+
                 {/* Photo input*/}
                 <div className="form-floating mb-3">
                   <input
@@ -147,18 +170,25 @@ export default function AddBlogs() {
 
                   {renderUploadedPicture()}
                 </div>
+
                 {/* Content input*/}
                 <div className="form-floating mb-3">
-                  <textarea
-                    className="form-control"
+                  <input
+                    className={`form-control ${
+                      errorContent ? "is-invalid" : ""
+                    }`}
                     type="text"
                     placeholder="content"
                     style={{ height: "10rem" }}
                     onChange={(event) => {
                       setContent(event.target.value);
+                      if (errorContent) setErrorContent("");
                     }}
                   />
-                  <label htmlFor="message">Content</label>
+                  <label>Content</label>
+                  {errorContent && (
+                    <div className="invalid-feedback">{errorContent}</div>
+                  )}
                 </div>
 
                 {/* Submit Button*/}

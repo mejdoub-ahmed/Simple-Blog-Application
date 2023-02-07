@@ -27,6 +27,7 @@ export default function Search() {
       });
   };
 
+  // function to render elemen
   const renderElement = (element) => {
     return (
       <>
