@@ -34,7 +34,7 @@ export default function OneBlog() {
               <img
                 className="img-fluid rounded"
                 src={OneBlog.photo}
-                alt="Photo"
+               
               />
 
               {/* Post content*/}
