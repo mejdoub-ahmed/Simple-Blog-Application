@@ -1,6 +1,7 @@
 let mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
+// schema 
 let BlogSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
